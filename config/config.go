@@ -2,19 +2,36 @@ package config
 
 import (
 	"os"
+
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Mysql MySQL `yaml:"mysql"`
+	MySQL 
+	Redis 
+	EmailInfo 
 }
 
 type MySQL struct {
-	Port   string `yaml:"port"`
-	Host   string `yaml:"host"`
-	Pwd    string `yaml:"password"`
-	DbName string `yaml:"dbname"`
-	User   string `yaml:"user"`
+	Host   string
+	Port   string 
+	Pwd    string 
+	DbName string 
+	User   string 
+}
+
+type Redis struct {
+	Host   string 
+	Port   string 
+	Pwd    string 
+}
+
+type EmailInfo struct {
+	Addr  string 
+	Host  string 
+	From  string 
+	Email string 
+	Auth  string 
 }
 
 var config Config
@@ -35,8 +52,16 @@ func InitConfig() {
 	}
 }
 
-func GetMySQLDB() MySQL{
-	return config.Mysql
+func GetMySQLConfig() MySQL{
+	return config.MySQL
+}
+
+func GetRedisConfig() Redis{
+	return config.Redis
+}
+
+func GetEmailInfo() EmailInfo {
+	return config.EmailInfo
 }
 
 func init() {

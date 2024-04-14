@@ -11,7 +11,7 @@ import (
 // 学生
 type Student struct {
 	gorm.Model
-	UINFO   *User // 用户基本信息
+	UINFO   User  `gorm:"embedded"`// 用户基本信息
 	SID     string `json:"sid"`     // 学号
 	Academy string `json:"academy"` // 学院
 	Class   string `json:"class"`   // 班级信息，例如计算机22-3
@@ -20,7 +20,7 @@ type Student struct {
 // 学生的构造器
 func NewStudent(email string, name string, pwd string, sid string) *Student{
 	return &Student{
-		UINFO: NewUser(email, name, pwd, "10000000000"),
+		UINFO: *NewUser(email, name, pwd, "10000000000", 0),
 		SID:  sid,
 		Academy: "",
 		Class: "",

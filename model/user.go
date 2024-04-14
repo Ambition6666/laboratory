@@ -11,17 +11,19 @@ import (
 type User struct {
 	Email    string `json:"email"` // 邮箱
 	Name     string `json:"name"`  // 姓名
-	PassWord string `json:"_"`     // 密码
+	PassWord string `json:"-"`     // 密码
 	Phone    string `json:"phone"` // 手机号
+	Role int `json:"-"` // 权限
 }
 
 // 用户构造器
-func NewUser(email string, name string, password string, phone string) *User{
+func NewUser(email string, name string, password string, phone string, role int) *User{
 	return &User{
 		Email: email,
 		Name: name,
 		PassWord: utils.Encrypt(password),
 		Phone: phone,
+		Role: role,
 	}
 } 
 
@@ -40,7 +42,7 @@ func (u *User) IsEmail() bool {
 
 // 判断是不是一个手机号码
 func (u *User) IsPhone() bool  {
-	re, err := regexp.Compile(`^1d{9}$`)
+	re, err := regexp.Compile(`[0-9]{11}`)
 
 	if err != nil {
 		log.SugarLogger.Errorf("正则表达式有误\n")

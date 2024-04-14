@@ -29,12 +29,12 @@ func getEncoder() zapcore.Encoder {
 
 func getLogWriter() zapcore.WriteSyncer {
 	workdir, _ := os.Getwd()
-	file, _ := os.Create(workdir + "/log/logs/study_system.log")
+	file, _ := os.Create(workdir + "/log/logs/laboratory.log")
 	return zapcore.AddSync(file)
 }
 
 func getLogErrWriter() zapcore.WriteSyncer {
 	workdir, _ := os.Getwd()
-	file, _ := os.Create(workdir + "/log/logs/study_system.err.log")
+	file, _ := os.Create(workdir + "/log/logs/laboratory.err.log")
 	return zapcore.AddSync(file)
 }

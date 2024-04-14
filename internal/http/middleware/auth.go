@@ -19,7 +19,7 @@ func Auth() gin.HandlerFunc {
 		}
 
 		t = t[7:]                          //扔掉头部
-		tk, c, e := utils.ParseToken(t) //c为claim结构体的实例
+		tk, c, r, e := utils.ParseToken(t) //c为claim结构体的实例
 		if e != nil || !tk.Valid {
 			ctx.JSON(http.StatusUnauthorized, "token解析失败")
 			ctx.Abort() //中间件不通过
@@ -28,6 +28,7 @@ func Auth() gin.HandlerFunc {
 		//查找用户
 		//存储用户信息
 		ctx.Set("id", c)
+		ctx.Set("role", r)
 		ctx.Next()
 	}
 }
