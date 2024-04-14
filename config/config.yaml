@@ -1,6 +1,0 @@
-Mysql:
-  host: 192.168.1.67
-  port: 3306
-  password: dream
-  dbname: study_system
-  user: root
