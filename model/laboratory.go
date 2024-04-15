@@ -13,8 +13,18 @@ type Laboratory struct {
 	gorm.Model
 	TID     uint      `json:"tid"`
 	Teacher *Teacher  `json:"teacher" gorm:"-"`
+	Date    string    `json:"date" gorm:"index"`
 	Place   string    `json:"place"` // 地点
 	Raa     StringArr `json:"raa"`   // 可预约时段(Reservations are available)
+}
+
+func NewLaboratory(date string, place string, raa []string, tid uint) *Laboratory {
+	return &Laboratory{
+		Date:  date,
+		Place: place,
+		Raa:   raa,
+		TID:   tid,
+	}
 }
 
 type StringArr []string

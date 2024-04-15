@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"laboratory/pkg/enum"
 	"crypto/sha256"
 	"encoding/hex"
+	"laboratory/pkg/enum"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -27,14 +27,14 @@ func GetToken(id uint, role int) (string, error) {
 		},
 	} //获取claim实例
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, a) //获取token
-	return token.SignedString([]byte(enum.MSK))                   //返回加密串
+	return token.SignedString([]byte(enum.MSK))           //返回加密串
 }
 
 // 解析token
 func ParseToken(token string) (*jwt.Token, uint, int, error) {
 	claim := &Claim{}
 	t, err := jwt.ParseWithClaims(token, claim, func(t *jwt.Token) (interface{}, error) {
-		return enum.MSK, nil
+		return []byte(enum.MSK), nil
 	}) //接收前端发来加密字段
 	return t, claim.ID, claim.Role, err
 }

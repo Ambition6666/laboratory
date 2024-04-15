@@ -31,9 +31,16 @@ func InitRouter() *gin.Engine {
 	api1.POST("/login2", api.LoginByAuthCode)
 
 	// 需要登录过的接口
-	la := api1.Group("/identify")
+	// 学生
+	stu:= api1.Group("/student")
+	stu.Use(middleware.Auth())
+	stu.POST("/booking", api.AddAppointment)
 
-	la.Use(middleware.Auth())
+	// 教师
+	tea := api1.Group("/teacher")
+	tea.Use(middleware.Auth())
+	tea.Use(middleware.IfTeacher())
+	tea.POST("/laboratory", api.AddLaboratory)
 
 	return r
 }
