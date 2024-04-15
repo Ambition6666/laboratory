@@ -4,15 +4,13 @@ import (
 	"laboratory/log"
 	"regexp"
 
-	"gorm.io/gorm"
 )
 
 // student
 // 学生
 type Student struct {
-	gorm.Model
 	UINFO   User  `gorm:"embedded"`// 用户基本信息
-	SID     string `json:"sid"`     // 学号
+	SID     string `json:"sid" gorm:"unique; not null"`     // 学号
 	Academy string `json:"academy"` // 学院
 	Class   string `json:"class"`   // 班级信息，例如计算机22-3
 }

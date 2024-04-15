@@ -1,9 +1,6 @@
 package model
 
-import "gorm.io/gorm"
-
 type Teacher struct {
-	gorm.Model
 	UINFO  User `gorm:"embedded"`// 用户基本信息
 }
 

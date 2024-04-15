@@ -2,7 +2,7 @@ package router
 
 import (
 	"io"
-	api "laboratory/api/login"
+	"laboratory/api"
 	middleware "laboratory/internal/http/middleware"
 	"laboratory/log"
 	"os"
@@ -23,12 +23,14 @@ func InitRouter() *gin.Engine {
 
 	api1 := r.Group("/api")
 
+	// 用户注册登录
 	api1.GET("/auth", api.GetAuthCode)
 	api1.POST("/register/teacher", api.RegisterTeacher)
 	api1.POST("/register/student", api.RegisterStudent)
 	api1.POST("/login", api.LoginByPwd)
 	api1.POST("/login2", api.LoginByAuthCode)
 
+	// 需要登录过的接口
 	la := api1.Group("/identify")
 
 	la.Use(middleware.Auth())

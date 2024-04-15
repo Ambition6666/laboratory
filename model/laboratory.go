@@ -5,10 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"gorm.io/gorm"
 )
 
 type Laboratory struct {
-	Teacher `gorm:"embedded"`
+	gorm.Model
+	TID     uint      `json:"tid"`
+	Teacher *Teacher  `json:"teacher" gorm:"-"`
 	Place   string    `json:"place"` // 地点
 	Raa     StringArr `json:"raa"`   // 可预约时段(Reservations are available)
 }
@@ -34,4 +38,12 @@ func (s *StringArr) Scan(value interface{}) error {
 	}
 	*s = make([]string, 0)
 	return nil
+}
+
+// 钩子函数查询教师信息
+func (l *Laboratory) AfterFind(tx *gorm.DB) (err error) {
+	if l.Teacher == nil {
+		tx.Where("tid = ?", l.TID).Find(l.Teacher)
+	}
+	return
 }

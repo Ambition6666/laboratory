@@ -1,8 +1,9 @@
 package dao
 
 import (
-	"laboratory/sql"
 	"context"
+	"laboratory/model"
+	"laboratory/sql"
 	"time"
 )
 
@@ -36,3 +37,16 @@ func GetUserRegister(em string) (string, error) {
 	return rdb.Get(context.Background(), em).Result()
 }
 
+// 通过邮箱获取用户信息
+func GetInfoByEmail(em string) *model.User {
+	db := sql.GetMySQLDB()
+	s := new(model.Student)
+	db.Where("email = ?", em).Find(s)
+	t := new(model.Teacher)
+	if (s.UINFO.ID == 0) {
+		db.Where("email = ?", em).Find(t)	
+	} else {
+		return &s.UINFO
+	}
+	return &t.UINFO
+}

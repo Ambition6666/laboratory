@@ -4,12 +4,15 @@ import (
 	"laboratory/log"
 	"laboratory/pkg/utils"
 	"regexp"
+
+	"gorm.io/gorm"
 )
 
 // user
 // 用户基本模型
 type User struct {
-	Email    string `json:"email"` // 邮箱
+	gorm.Model
+	Email    string `json:"email" gorm:"not null; unique; index"` // 邮箱
 	Name     string `json:"name"`  // 姓名
 	PassWord string `json:"-"`     // 密码
 	Phone    string `json:"phone"` // 手机号
