@@ -3,9 +3,9 @@ package user
 import (
 	"fmt"
 	"laboratory/config"
+	"laboratory/internal/dao"
 	"laboratory/log"
 	"laboratory/pkg/utils"
-	"laboratory/internal/dao"
 	"net/http"
 	"net/smtp"
 
@@ -28,7 +28,7 @@ func SendAuthCode(to string) error {
 	if err != nil {
 		return err
 	}
-	subject := "【study_system】邮箱验证"
+	subject := "【实验室预约平台】邮箱验证"
 	html := fmt.Sprintf(`<div style="text-align: center;">
 		<h2 style="color: #333;">欢迎使用，你的验证码为：</h2>
 		<h1 style="margin: 1.2em 0;">%s</h1>
@@ -58,7 +58,6 @@ func CreateAuthCode(em string) (string, error) {
 	err := dao.SetAuthCode(em, code)
 	return code, err
 }
-
 
 // 校验验证码
 func IdentifyCode(em string, authCode string) (int, string) {
