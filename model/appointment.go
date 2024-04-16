@@ -11,7 +11,7 @@ type Appointment struct {
 	SID            uint        `json:"sid" gorm:"primaryKey;autoIncrement:false"`
 	StudentInfo    *Student    `json:"student_info" gorm:"-"`
 	ProgramContent string      `json:"program_content"`
-	Raa     StringArr `json:"raa"`   // 可预约时段(Reservations are available)
+	Raa            StringArr   `json:"raa"` // 可预约时段(Reservations are available)
 }
 
 func NewAppointment(sid uint, lid uint, pc string, raa []string) *Appointment {
@@ -26,10 +26,10 @@ func NewAppointment(sid uint, lid uint, pc string, raa []string) *Appointment {
 // 钩子函数查询信息
 func (a *Appointment) AfterFind(tx *gorm.DB) (err error) {
 	if a.LaboratoryInfo == nil {
-		tx.Where("lid = ?", a.LID).Find(a.LaboratoryInfo)
+		tx.Where("id = ?", a.LID).Find(&a.LaboratoryInfo)
 	}
 	if a.StudentInfo == nil {
-		tx.Where("sid = ?", a.SID).Find(a.StudentInfo)
+		tx.Where("id = ?", a.SID).Find(&a.StudentInfo)
 	}
 	return
 }

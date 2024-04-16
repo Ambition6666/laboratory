@@ -53,6 +53,7 @@ func SendAuthCode(to string) error {
 	return err
 }
 
+// 创建随机验证码
 func CreateAuthCode(em string) (string, error) {
 	code := fmt.Sprintf("%d", utils.RandNum(900000)+100000)
 	err := dao.SetAuthCode(em, code)

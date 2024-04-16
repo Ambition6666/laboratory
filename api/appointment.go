@@ -51,3 +51,36 @@ func AddAppointment(c *gin.Context) {
 		Msg:  msg,
 	})
 }
+
+// 查询可预约的实验室
+func SearchLaboratory(c *gin.Context) {
+	date := c.Query("date")
+	code, msg, data := booking.SearchLaboratory(date)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}
+
+// 学生查询已预约的实验室信息
+func SearchAppointment(c *gin.Context) {
+	sid := c.GetUint("id")
+	code, msg, data := booking.SearchStuAppointment(sid)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}
+
+// 老师教询开放实验室已经预约的人员的名单
+func SearchLaboratoryHuInfo(c *gin.Context) {
+	lid := c.Query("lid")
+	code, msg, data := booking.SearchLaboratoryHuInfo(lid)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}

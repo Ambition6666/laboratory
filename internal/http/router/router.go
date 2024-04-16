@@ -32,15 +32,18 @@ func InitRouter() *gin.Engine {
 
 	// 需要登录过的接口
 	// 学生
-	stu:= api1.Group("/student")
+	stu := api1.Group("/student")
 	stu.Use(middleware.Auth())
 	stu.POST("/booking", api.AddAppointment)
+	stu.GET("/booking", api.SearchLaboratory)
+	stu.GET("/already/booking", api.SearchAppointment)
 
 	// 教师
 	tea := api1.Group("/teacher")
 	tea.Use(middleware.Auth())
 	tea.Use(middleware.IfTeacher())
 	tea.POST("/laboratory", api.AddLaboratory)
+	tea.GET("/laboratory", api.SearchLaboratoryHuInfo)
 
 	return r
 }

@@ -53,7 +53,7 @@ func (s *StringArr) Scan(value interface{}) error {
 // 钩子函数查询教师信息
 func (l *Laboratory) AfterFind(tx *gorm.DB) (err error) {
 	if l.Teacher == nil {
-		tx.Where("tid = ?", l.TID).Find(l.Teacher)
+		tx.Where("id = ?", l.TID).Find(&l.Teacher)
 	}
 	return
 }
