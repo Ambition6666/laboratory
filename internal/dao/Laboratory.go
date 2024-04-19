@@ -11,7 +11,6 @@ func CreateLaboratory(l *model.Laboratory) error {
 	return db.Create(l).Error
 }
 
-
 // 查询实验室列表
 func SearchLaboratory(date string) ([]model.Laboratory, error) {
 	db := sql.GetMySQLDB()

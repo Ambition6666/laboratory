@@ -50,3 +50,10 @@ func GetInfoByEmail(em string) *model.User {
 	}
 	return &t.UINFO
 }
+
+
+// 通过用户id获取用户信息
+func GetUserInfoByID(id uint, u model.USER) error {
+	db := sql.GetMySQLDB()
+	return db.Where("id = ?", id).Find(u).Error
+}

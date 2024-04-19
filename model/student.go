@@ -9,7 +9,7 @@ import (
 // student
 // 学生
 type Student struct {
-	UINFO   User  `gorm:"embedded"`// 用户基本信息
+	UINFO   User  `json:"basic" gorm:"embedded"`// 用户基本信息
 	SID     string `json:"sid" gorm:"unique; not null"`     // 学号
 	Academy string `json:"academy"` // 学院
 	Class   string `json:"class"`   // 班级信息，例如计算机22-3

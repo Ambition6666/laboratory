@@ -34,3 +34,15 @@ func CreateStudent(info *request.RegisterStudentInfo) (int, string) {
 	return http.StatusOK, "创建成功"
 
 }
+
+func GetStudentINFO(id uint) (int, string, any) {
+	s := new(model.Student)
+	err := dao.GetUserInfoByID(id, s)
+
+	if err != nil {
+		log.SugarLogger.Error("获取学生信息错误", err)
+		return  http.StatusBadRequest, "获取失败", nil
+	}
+
+	return http.StatusOK, "获取成功", s
+}

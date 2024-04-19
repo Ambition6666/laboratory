@@ -1,7 +1,7 @@
 package model
 
 type Teacher struct {
-	UINFO  User `gorm:"embedded"`// 用户基本信息
+	UINFO  User `json:"basic" gorm:"embedded"`// 用户基本信息
 }
 
 // 教师的构造器

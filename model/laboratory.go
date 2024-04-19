@@ -10,7 +10,7 @@ import (
 )
 
 type Laboratory struct {
-	gorm.Model
+	gorm.Model	`json:"-"`
 	TID     uint      `json:"tid"`
 	Teacher *Teacher  `json:"teacher" gorm:"-"`
 	Date    string    `json:"date" gorm:"index"`
