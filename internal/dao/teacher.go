@@ -18,3 +18,9 @@ func GetInfoByEmailT(em string) *model.Teacher{
 	db.Where("email = ?", em).Find(t)
 	return t
 }
+
+// 修改老师信息
+func UpdateTeacherINFO(t *model.Teacher) error{
+	db := sql.GetMySQLDB()
+	return db.Save(t).Error
+}

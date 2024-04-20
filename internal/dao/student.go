@@ -18,3 +18,10 @@ func GetInfoByEmailS(em string) *model.Student {
 	db.Where("email = ?", em).Find(s)
 	return s
 }
+
+
+// 修改学生信息
+func UpdateStudentINFO(s *model.Student) error{
+	db := sql.GetMySQLDB()
+	return db.Save(s).Error
+}

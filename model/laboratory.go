@@ -10,12 +10,13 @@ import (
 )
 
 type Laboratory struct {
-	gorm.Model	`json:"-"`
-	TID     uint      `json:"tid"`
-	Teacher *Teacher  `json:"teacher" gorm:"-"`
-	Date    string    `json:"date" gorm:"index"`
-	Place   string    `json:"place"` // 地点
-	Raa     StringArr `json:"raa"`   // 可预约时段(Reservations are available)
+	gorm.Model 
+	TID        uint      `json:"-"`
+	TName      string    `json:"name" gorm:"-"`
+	TPhone     string    `json:"phone" gorm:"-"`
+	Date       string    `json:"date" gorm:"index"`
+	Place      string    `json:"place"` // 地点
+	Raa        StringArr `json:"raa"`   // 可预约时段(Reservations are available)
 }
 
 func NewLaboratory(date string, place string, raa []string, tid uint) *Laboratory {
@@ -52,8 +53,9 @@ func (s *StringArr) Scan(value interface{}) error {
 
 // 钩子函数查询教师信息
 func (l *Laboratory) AfterFind(tx *gorm.DB) (err error) {
-	if l.Teacher == nil {
-		tx.Where("id = ?", l.TID).Find(&l.Teacher)
-	}
+	t := new(Teacher)
+	tx.Where("id = ?", l.TID).Find(&t)
+	l.TName = t.UINFO.Name
+	l.TPhone = t.UINFO.Phone
 	return
 }

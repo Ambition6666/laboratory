@@ -41,8 +41,35 @@ func GetStudentINFO(id uint) (int, string, any) {
 
 	if err != nil {
 		log.SugarLogger.Error("获取学生信息错误", err)
-		return  http.StatusBadRequest, "获取失败", nil
+		return http.StatusBadRequest, "获取失败", nil
 	}
 
 	return http.StatusOK, "获取成功", s
+}
+
+func UpdateStudentINFO(id uint, data *request.UpdateStuINFO) (int, string) {
+	s := new(model.Student)
+	err := dao.GetUserInfoByID(id, s)
+
+	if err != nil {
+		log.SugarLogger.Error("获取学生信息错误", err)
+		return http.StatusBadRequest, "修改失败"
+	}
+
+	s.SID = data.SID
+	s.Academy = data.Academy
+	s.Class = data.Class
+	s.UINFO.Phone = data.Phone
+	s.UINFO.Name = data.Name
+
+	if s.IsInfoOK() {
+		err = dao.UpdateStudentINFO(s)
+		if err != nil {
+			log.SugarLogger.Error("更新学生信息错误", err)
+			return http.StatusBadRequest, "修改失败"
+		}
+		return http.StatusOK, "修改成功"
+	}
+
+	return http.StatusBadRequest, "信息不符合规范"
 }
