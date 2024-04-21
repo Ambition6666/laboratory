@@ -11,7 +11,7 @@ type Appointment struct {
 	SID            uint        `json:"sid" gorm:"primaryKey;autoIncrement:false"`
 	StudentInfo    *Student    `json:"student_info" gorm:"-"`
 	ProgramContent string      `json:"program_content"`
-	Raa            StringArr   `json:"raa"` // 可预约时段(Reservations are available)
+	Raa            StringArr   `json:"araa"` // 可预约时段(Reservations are available)
 }
 
 func NewAppointment(sid uint, lid uint, pc string, raa []string) *Appointment {

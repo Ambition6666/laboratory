@@ -4,24 +4,26 @@ import (
 	"laboratory/log"
 	"regexp"
 
+	"gorm.io/gorm"
 )
 
 // student
 // 学生
 type Student struct {
-	UINFO   User  `json:"basic" gorm:"embedded"`// 用户基本信息
-	SID     string `json:"sid" gorm:"unique; not null"`     // 学号
-	Academy string `json:"academy"` // 学院
-	Class   string `json:"class"`   // 班级信息，例如计算机22-3
+	UINFO   User   `json:"basic" gorm:"embedded"` // 用户基本信息
+	SID     string `json:"sid" gorm:"not null"`   // 学号
+	Academy string `json:"academy"`               // 学院
+	Class   string `json:"class"`                 // 班级信息，例如计算机22-3
+	IsOK    bool   `json:"isOk" gorm:"-"`         // 判断信息是否完整
 }
 
 // 学生的构造器
-func NewStudent(email string, name string, pwd string, sid string) *Student{
+func NewStudent(email string, name string, pwd string, sid string) *Student {
 	return &Student{
-		UINFO: *NewUser(email, name, pwd, "10000000000", 0),
-		SID:  sid,
+		UINFO:   *NewUser(email, name, pwd, "10000000000", 0),
+		SID:     sid,
 		Academy: "",
-		Class: "",
+		Class:   "",
 	}
 }
 
@@ -40,4 +42,14 @@ func (s *Student) IsSID() bool {
 // 判断学生的信息是否ok
 func (s *Student) IsInfoOK() bool {
 	return s.UINFO.IsInfoOK() && s.IsSID()
+}
+
+// 判断学生信息是否完整
+func (s *Student) IsALLINFO() bool {
+	return s.IsInfoOK() && s.Class != "" && s.Academy != ""
+}
+
+func (s *Student) AfterFind(tx *gorm.DB) (err error) {
+	s.IsOK = s.IsALLINFO()
+	return
 }
