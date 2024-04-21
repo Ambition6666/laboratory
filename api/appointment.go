@@ -97,3 +97,14 @@ func ExportExcelHuInfo(c *gin.Context) {
 		Data: data,
 	})
 }
+
+// 教师查询可预约的实验室
+func SearchLaboratoryByTeacher(c *gin.Context) {
+	tid := c.GetUint("id")
+	code, msg, data := booking.SearchLaboratoryByTeacher(tid)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}

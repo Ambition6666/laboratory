@@ -28,3 +28,14 @@ func SearchLaboratoryHuInfo(lid string) (int, string, any) {
 	}
 	return http.StatusOK, "查询成功", list
 }
+
+
+// 教师查询可预约的实验室
+func SearchLaboratoryByTeacher(tid uint) (int, string, any) {
+	list, err := dao.SearchLaboratoryByTeacher(tid)
+	if err != nil {
+		log.SugarLogger.Error("查询预约实验室错误", err)
+		return http.StatusBadRequest, "查询失败", nil
+	}
+	return http.StatusOK, "查询成功", list
+}

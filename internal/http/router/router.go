@@ -48,6 +48,7 @@ func InitRouter() *gin.Engine {
 	tea.POST("/laboratory", api.AddLaboratory)
 	tea.GET("/laboratory", api.SearchLaboratoryHuInfo)
 	tea.GET("/excel", api.ExportExcelHuInfo)
+	tea.GET("/mypublishlab", api.SearchLaboratoryByTeacher)
 
 	return r
 }
