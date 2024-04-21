@@ -2,6 +2,7 @@ package api
 
 import (
 	"laboratory/internal/service/booking"
+	"laboratory/internal/service/summary"
 	"laboratory/log"
 	"laboratory/vo/request"
 	"laboratory/vo/response"
@@ -78,6 +79,18 @@ func SearchAppointment(c *gin.Context) {
 func SearchLaboratoryHuInfo(c *gin.Context) {
 	lid := c.Query("lid")
 	code, msg, data := booking.SearchLaboratoryHuInfo(lid)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}
+
+// 老师导出开放实验室已经预约的人员的名单
+func ExportExcelHuInfo(c *gin.Context) {
+	lid := c.Query("lid")
+	code, msg, data := summary.GetBookingINFOExcel(lid)
+
 	c.JSON(http.StatusOK, response.CommonData{
 		Code: code,
 		Msg:  msg,

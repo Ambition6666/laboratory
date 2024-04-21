@@ -17,7 +17,7 @@ type USER interface {
 type User struct {
 	gorm.Model `json:"-"`
 	Email      string `json:"email" gorm:"not null; unique; index"` // 邮箱
-	Name       string `json:"name"`                                 // 姓名
+	Name       string `json:"name" excel:"h"`                                 // 姓名
 	PassWord   string `json:"-"`                                    // 密码
 	Phone      string `json:"phone"`                                // 手机号
 	Role       int    `json:"rl"`                                   // 权限

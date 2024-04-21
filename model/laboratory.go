@@ -12,10 +12,10 @@ import (
 type Laboratory struct {
 	gorm.Model 
 	TID        uint      `json:"-"`
-	TName      string    `json:"name" gorm:"-"`
-	TPhone     string    `json:"phone" gorm:"-"`
-	Date       string    `json:"date" gorm:"index"`
-	Place      string    `json:"place"` // 地点
+	Date       string    `json:"date" gorm:"index" excel:"h"`
+	Place      string    `json:"place" excel:"h"` // 地点
+	TName      string    `json:"name" gorm:"-" excel:"h"`
+	TPhone     string    `json:"phone" gorm:"-" excel:"h"`
 	Raa        StringArr `json:"raa"`   // 可预约时段(Reservations are available)
 }
 

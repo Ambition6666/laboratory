@@ -6,6 +6,7 @@ import (
 	middleware "laboratory/internal/http/middleware"
 	"laboratory/log"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +21,7 @@ func InitRouter() *gin.Engine {
 	gin.DefaultWriter = io.MultiWriter(logfile)
 	r := gin.Default()
 	r.Use(middleware.Cors())
-
+	r.Static("/api/static", filepath.Join(workdir, "excel"))
 	api1 := r.Group("/api")
 
 	// 用户注册登录
@@ -46,6 +47,7 @@ func InitRouter() *gin.Engine {
 	tea.Use(middleware.IfTeacher())
 	tea.POST("/laboratory", api.AddLaboratory)
 	tea.GET("/laboratory", api.SearchLaboratoryHuInfo)
+	tea.GET("/excel", api.ExportExcelHuInfo)
 
 	return r
 }

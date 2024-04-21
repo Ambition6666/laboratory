@@ -7,11 +7,11 @@ import (
 // 学生预约实验室
 type Appointment struct {
 	LID            uint        `json:"lid" gorm:"primaryKey;autoIncrement:false"`
-	LaboratoryInfo *Laboratory `json:"laboratory_info" gorm:"-"`
+	LaboratoryInfo *Laboratory `json:"laboratory_info" gorm:"-" excel:"h"`
 	SID            uint        `json:"sid" gorm:"primaryKey;autoIncrement:false"`
-	StudentInfo    *Student    `json:"student_info" gorm:"-"`
-	ProgramContent string      `json:"program_content"`
-	Raa            StringArr   `json:"araa"` // 可预约时段(Reservations are available)
+	StudentInfo    *Student    `json:"student_info" gorm:"-" excel:"h"`
+	ProgramContent string      `json:"program_content" excel:"h"`
+	Raa            StringArr   `json:"araa" excel:"h"` //预约时段(Reservations are available)
 }
 
 func NewAppointment(sid uint, lid uint, pc string, raa []string) *Appointment {

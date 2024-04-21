@@ -11,9 +11,9 @@ import (
 // 学生
 type Student struct {
 	UINFO   User   `json:"basic" gorm:"embedded"` // 用户基本信息
-	SID     string `json:"sid" gorm:"not null"`   // 学号
-	Academy string `json:"academy"`               // 学院
-	Class   string `json:"class"`                 // 班级信息，例如计算机22-3
+	SID     string `json:"sid" gorm:"not null" excel:"h"`   // 学号
+	Academy string `json:"academy" excel:"h"`               // 学院
+	Class   string `json:"class" excel:"h"`                 // 班级信息，例如计算机22-3
 	IsOK    bool   `json:"isOk" gorm:"-"`         // 判断信息是否完整
 }
 
