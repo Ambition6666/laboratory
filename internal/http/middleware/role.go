@@ -6,6 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 校验是否是学生
+func IfStudent() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role := c.GetInt("role")
+		if role != 0 {
+			c.JSON(http.StatusForbidden, "非学生用户")
+			c.Abort()
+		} else {
+			c.Next()
+		}
+	}
+}
+
+
 // 校验是否有老师的权限
 func IfTeacher() gin.HandlerFunc {
 	return func(c *gin.Context) {

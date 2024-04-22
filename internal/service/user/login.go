@@ -3,6 +3,7 @@ package user
 import (
 	"laboratory/internal/dao"
 	"laboratory/log"
+	"laboratory/model"
 	"laboratory/pkg/utils"
 	"net/http"
 )
@@ -46,4 +47,41 @@ func LoginByAuthCode(em string, authCode string) (int, string) {
 	}
 
 	return http.StatusOK, token
+}
+
+
+// 用户更改密码
+func UpdateUserINFO( em string, authcode string, pwd string) (int, string) {
+	u := dao.GetInfoByEmail(em)
+	if u.ID == 0 {
+		return http.StatusUnauthorized, "用户不存在"
+	}
+	code, msg := IdentifyCode(em, authcode)
+
+	if code != http.StatusOK {
+		return code, msg
+	}
+
+	switch u.Role {
+	case 0:
+		stu := new (model.Student)
+		dao.GetUserInfoByID(u.ID, stu)
+		stu.UINFO.PassWord = utils.Encrypt(pwd)
+		err := dao.ChangeUserPassWord(stu)
+		if err != nil {
+			log.SugarLogger.Error("用户更改密码错误", err)
+			return http.StatusInternalServerError, "更改失败"
+		}
+	case 1:
+		tea := new (model.Teacher)
+		dao.GetUserInfoByID(u.ID, tea)
+		tea.UINFO.PassWord = utils.Encrypt(pwd)
+		err := dao.ChangeUserPassWord(tea)
+		if err != nil {
+			log.SugarLogger.Error("用户更改密码错误", err)
+			return http.StatusInternalServerError, "更改失败"
+		}
+	}
+
+	return http.StatusOK, "更改成功"
 }

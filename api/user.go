@@ -68,3 +68,14 @@ func UpdateUserINFO(c *gin.Context) {
 		Msg:  msg,
 	})
 }
+
+// 更改用户密码
+func PutUserPWD(c *gin.Context) {
+	info := new(request.UpdateUserPWD)
+	c.Bind(info)
+	code, msg := user.UpdateUserINFO( info.Email, info.AuthCode, info.PassWord)
+	c.JSON(http.StatusOK, response.Common{
+		Code: code,
+		Msg:  msg,
+	})
+}

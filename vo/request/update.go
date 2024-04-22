@@ -13,3 +13,9 @@ type UpdateTeaINFO struct {
 	Phone   string `json:"phone"`
 	Academy string `json:"academy"`
 }
+
+type UpdateUserPWD struct {
+	Email    string `json:"email"`
+	AuthCode string `json:"auth_code"`
+	PassWord string `json:"pwd"`
+}

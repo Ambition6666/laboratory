@@ -57,3 +57,9 @@ func GetUserInfoByID(id uint, u model.USER) error {
 	db := sql.GetMySQLDB()
 	return db.Where("id = ?", id).Find(u).Error
 }
+
+// 修改用户密码
+func ChangeUserPassWord( u model.USER) error {
+	db := sql.GetMySQLDB()
+	return db.Save(u).Error
+}

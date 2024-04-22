@@ -30,6 +30,7 @@ func InitRouter() *gin.Engine {
 	api1.POST("/register/student", api.RegisterStudent)
 	api1.POST("/login", api.LoginByPwd)
 	api1.POST("/login2", api.LoginByAuthCode)
+	api1.PUT("/pwd", api.PutUserPWD)
 
 	api1.GET("/info", middleware.Auth(), api.GetUserINFO)
 	api1.PUT("/info", middleware.Auth(), api.UpdateUserINFO)
@@ -37,9 +38,9 @@ func InitRouter() *gin.Engine {
 	// 学生
 	stu := api1.Group("/student")
 	stu.Use(middleware.Auth())
-	stu.POST("/booking", api.AddAppointment)
+	stu.POST("/booking", middleware.IfStudent(),api.AddAppointment)
 	stu.GET("/booking", api.SearchLaboratory)
-	stu.GET("/already/booking", api.SearchAppointment)
+	stu.GET("/already/booking", middleware.IfStudent(), api.SearchAppointment)
 
 	// 教师
 	tea := api1.Group("/teacher")
