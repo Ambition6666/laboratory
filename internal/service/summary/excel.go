@@ -37,10 +37,17 @@ func GetBookingINFOExcel(lid string) (int, string, any) {
 
 	// 设置工作簿的默认工作表
 	f.SetActiveSheet(index)
-
+	title := []any {
+		"开放日期", "实验开放地点", "指导老师姓名", "指导老师联系电话", "学生姓名", "学号", "学院", "班级", "项目内容", "预约时间段",
+	}
+	err = f.SetSheetRow("Sheet1", "A1", &title)
+	if err != nil {
+		log.SugarLogger.Error("创建excel工作表失败", err)
+		return http.StatusInternalServerError, "导出失败", nil
+	}
 	// 按行赋值
 	for i := 1; i <= len(data); i++ {
-		s := fmt.Sprintf("A%d", i)
+		s := fmt.Sprintf("A%d", i + 1)
 		log.SugarLogger.Debugln(s)
 		arr := utils.StoArr(data[i-1])
 		log.SugarLogger.Debugln(arr)

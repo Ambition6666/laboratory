@@ -26,3 +26,18 @@ func SearchStuAppointment(sid uint) ([]model.Appointment, error){
 	err := db.Where("s_id = ?", sid).Find(&list).Error
 	return list, err
 }
+
+// 创建教师预约信息
+func CreateTAppointment(t *model.TAppointment) error {
+	db := sql.GetMySQLDB()
+	return db.Create(t).Error
+}
+
+// 查询教师预约信息
+func SearchTAppointment(tid uint) ([]model.TAppointment,error) {
+	db := sql.GetMySQLDB()
+	list := make([]model.TAppointment, 0)
+	err := db.Where("t_id = ?", tid).Find(&list).Error
+
+	return list, err
+}

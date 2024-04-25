@@ -4,6 +4,7 @@ import (
 	"laboratory/internal/service/booking"
 	"laboratory/internal/service/summary"
 	"laboratory/log"
+	"laboratory/model"
 	"laboratory/vo/request"
 	"laboratory/vo/response"
 	"net/http"
@@ -102,6 +103,29 @@ func ExportExcelHuInfo(c *gin.Context) {
 func SearchLaboratoryByTeacher(c *gin.Context) {
 	tid := c.GetUint("id")
 	code, msg, data := booking.SearchLaboratoryByTeacher(tid)
+	c.JSON(http.StatusOK, response.CommonData{
+		Code: code,
+		Msg:  msg,
+		Data: data,
+	})
+}
+
+// 教师申请实验室
+func BookingLaboratoryByTeacher(c *gin.Context) {
+	t := new(model.TAppointment)
+	c.Bind(t)
+	tid := c.GetUint("id")
+	code, msg := booking.BookingLaboratoryByTeacher(tid, t)
+	c.JSON(http.StatusOK, response.Common{
+		Code: code,
+		Msg:  msg,
+	})
+}
+
+// 教师查询已经预约的实验室
+func SearchMyBookingLaboratoryByTeacher(c *gin.Context) {
+	tid := c.GetUint("id")
+	code, msg, data := booking.SearchTeaAppointment(tid)
 	c.JSON(http.StatusOK, response.CommonData{
 		Code: code,
 		Msg:  msg,

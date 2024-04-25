@@ -38,3 +38,25 @@ func SearchStuAppointment(sid uint) (int, string, any) {
 	}
 	return http.StatusOK, "查询成功", list
 }
+
+// 教师预约实验室
+func BookingLaboratoryByTeacher(tid uint, t *model.TAppointment) (int, string){
+	t.TID = tid
+	err := dao.CreateTAppointment(t)
+	if err != nil {
+		log.SugarLogger.Error("创建教师预约信息错误", err)
+		return http.StatusInternalServerError, "预约失败"
+	} 
+
+	return http.StatusOK, "预约成功"
+}
+
+// 教师查询已经预约的实验室
+func SearchTeaAppointment(tid uint) (int, string, any) {
+	list, err := dao.SearchTAppointment(tid)
+	if err != nil {
+		log.SugarLogger.Error("教师查询已预约实验室错误", err)
+		return http.StatusBadRequest, "查询失败", nil
+	}
+	return http.StatusOK, "查询成功", list
+}

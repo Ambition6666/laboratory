@@ -60,4 +60,5 @@ func initMODEL() {
 	db.AutoMigrate(&model.Teacher{}, &model.User{})
 	db.AutoMigrate(&model.Laboratory{})
 	db.AutoMigrate(&model.Appointment{})
+	db.AutoMigrate(&model.TAppointment{})
 }

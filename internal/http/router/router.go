@@ -38,7 +38,7 @@ func InitRouter() *gin.Engine {
 	// 学生
 	stu := api1.Group("/student")
 	stu.Use(middleware.Auth())
-	stu.POST("/booking", middleware.IfStudent(),api.AddAppointment)
+	stu.POST("/booking", middleware.IfStudent(), api.AddAppointment)
 	stu.GET("/booking", api.SearchLaboratory)
 	stu.GET("/already/booking", middleware.IfStudent(), api.SearchAppointment)
 
@@ -50,6 +50,8 @@ func InitRouter() *gin.Engine {
 	tea.GET("/laboratory", api.SearchLaboratoryHuInfo)
 	tea.GET("/excel", api.ExportExcelHuInfo)
 	tea.GET("/mypublishlab", api.SearchLaboratoryByTeacher)
+	tea.POST("/booking", api.BookingLaboratoryByTeacher)
+	tea.GET("/already/booking", api.SearchMyBookingLaboratoryByTeacher)
 
 	return r
 }
